@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Groupie Tracker</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+    <h1>Artists</h1>
+    {{range .}}
+    <div class="artist-card">
+        <h2>{{.Name}}</h2>
+        <img src="{{.ImageURL}}" alt="{{.Name}}">
+        <p>Members: {{join .Members ", "}}</p>
+    </div>
+    {{end}}
+</body>
+</html>
