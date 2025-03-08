@@ -1,54 +1,54 @@
 package main
 
 import (
-	"encoding/json"
+	"fmt"
+	"groupietracker/handlers"
+	"groupietracker/models"
+	"groupietracker/utils"
 	"log"
 	"net/http"
-	"text/template"
 )
 
-type Artist struct {
-	ID           int      `json:"id"`
-	Name         string   `json:"name"`
-	ImageURL     string   `json:"image"`
-	Members      []string `json:"members"`
-	CreationDate int      `json:"creationDate"`
-	FirstAlbum   string   `json:"firstAlbum"`
-}
+// Define a global variable to store the artists data
+var artists []models.Artist
 
 func main() {
-	http.HandleFunc("/", homeHandler)
-	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
+	var locations models.Locations
+	var dates models.Dates
+	var relations models.Relation
 
-	log.Println("Server starting on :8080")
-	log.Fatal(http.ListenAndServe(":8080", nil))
-}
-
-func homeHandler(w http.ResponseWriter, r *http.Request) {
-	artists, err := fetchArtists()
+	err := utils.GetArtists(&artists)
 	if err != nil {
-		http.Error(w, "Failed to fetch data", http.StatusInternalServerError)
-		return
+		log.Println("Error fetching artists:", err)
 	}
 
-	tmpl, err := template.ParseFiles("templates/home.html")
+	err = utils.GetLocations(&locations)
 	if err != nil {
-		http.Error(w, "Template error", http.StatusInternalServerError)
-		return
+		log.Println("Error fetching locations:", err)
 	}
-	tmpl.Execute(w, artists)
-}
 
-func fetchArtists() ([]Artist, error) {
-	resp, err := http.Get("https://groupietrackers.herokuapp.com/api/artists")
+	err = utils.GetDates(&dates)
 	if err != nil {
-		return nil, err
+		log.Println("Error fetching dates:", err)
 	}
-	defer resp.Body.Close()
 
-	var artists []Artist
-	if err := json.NewDecoder(resp.Body).Decode(&artists); err != nil {
-		return nil, err
+	err = utils.GetRelations(&relations)
+	if err != nil {
+		log.Println("Error fetching relations:", err)
 	}
-	return artists, nil
+
+	// Serve static files (CSS, JavaScript, images)
+	fs := http.FileServer(http.Dir("static"))
+	http.Handle("/static/", http.StripPrefix("/static/", fs))
+
+	// ---- WEB SERVER SETUP ----
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) { //pass artists data in the homeHandler function
+		handlers.HomeHandler(w, r, artists)
+	})
+
+	fmt.Println("Server listening on port 8080")
+	err = http.ListenAndServe(":8080", nil)
+	if err != nil {
+		log.Fatalf("Error starting server: %v", err)
+	}
 }
