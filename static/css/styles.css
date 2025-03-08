@@ -69,3 +69,26 @@ footer {
     margin: 0;
     font-size: 1.2em;
 }
+
+/* Styles for the artist details page */
+.artist-details {
+    background-color: white;
+    border-radius: 0.5em;
+    padding: 1em;
+    margin-bottom: 1em;
+}
+
+.artist-details h1 {
+    margin-top: 0;
+}
+
+.artist-details .artist-image {
+    max-width: 300px;
+    float: left;
+    margin-right: 1em;
+    border-radius: 0.5em;
+}
+
+.artist-info {
+    margin-bottom: 1em;
+}

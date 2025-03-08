@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	"groupietracker/handlers"
-	"groupietracker/models"
-	"groupietracker/utils"
+	"groupietracker/handlers" // Import the handlers package
+	"groupietracker/models"   // Replace "yourmodule" with your actual module name
+	"groupietracker/utils"    // Replace "yourmodule" with your actual module name
 	"log"
 	"net/http"
 )
@@ -44,6 +44,11 @@ func main() {
 	// ---- WEB SERVER SETUP ----
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) { //pass artists data in the homeHandler function
 		handlers.HomeHandler(w, r, artists)
+	})
+
+	// Register the artist handler for the "/artist/{id}" route
+	http.HandleFunc("/artist/", func(w http.ResponseWriter, r *http.Request) {
+		handlers.ArtistHandler(w, r, artists)
 	})
 
 	fmt.Println("Server listening on port 8080")

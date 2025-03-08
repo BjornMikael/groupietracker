@@ -1,0 +1,38 @@
+{{ define "artist" }}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{ template "base-head" . }}
+</head>
+<body>
+    {{ template "base-header" . }}
+    <main>
+    <div class="artist-details">
+        <img src="{{.Artist.Image}}" alt="{{.Artist.Name}}" class="artist-image">
+        <h1>
+            <a href="{{.WikipediaURL}}" class="artist-name" target="_blank">{{.Artist.Name}}</a>
+        </h1>
+
+        <div class="artist-info">
+            <p><b>Creation Year:</b> {{.Artist.CreationDate}}</p>
+            <p><b>Release Date of Debut Album:</b> {{.FormattedFirstAlbum}}</p>
+        </div>
+
+        <h2>Members:</h2>
+        <ul>
+            {{range .MembersLinks}}
+            <li><a href="{{.URL}}" target="_blank">{{.Name}}</a></li>
+            {{end}}
+        </ul>
+
+		<a href="/locations/{{.Artist.ID}}">Concert Locations</a>
+    </div>
+</main>
+{{ template "base-footer" . }}
+</body>
+</html>
+{{ end }}
+
+{{ define "content" }}
+<!-- Move artist-specific content here if needed -->
+{{ end }}

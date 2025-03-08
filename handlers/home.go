@@ -28,7 +28,7 @@ func HomeHandler(w http.ResponseWriter, r *http.Request, artists []models.Artist
 	}
 
 	// Execute the template, passing in the data
-	err := tpl.ExecuteTemplate(w, "base.html", data) // Use base.html as the entry point
+	err := tpl.ExecuteTemplate(w, "home", data) // Render "home" template
 	if err != nil {
 		log.Println("Error executing template:", err)
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)

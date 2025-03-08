@@ -1,11 +1,23 @@
-{{define "content"}}
-    <h1>List of Artists:</h1>
-    <div class="artist-grid">
-        {{range .Artists}}
-        <a href="/artist/{{.ID}}" class="artist-card">
-            <img src="{{.Image}}" alt="{{.Name}}" class="artist-image">
-            <h2 class="artist-name">{{.Name}}</h2>
-        </a>
-        {{end}}
-    </div>
-{{end}}
+{{ define "home" }}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{ template "base-head" . }}
+</head>
+<body>
+    {{ template "base-header" . }}
+    <main>
+        <h1>List of Artists:</h1>
+        <div class="artist-grid">
+            {{ range .Artists }}
+    <a href="/artist/{{.ID}}" class="artist-card">
+        <img src="{{.Image}}" alt="{{.Name}}" class="artist-image">
+        <h2 class="artist-name">{{.Name}}</h2>
+    </a>
+    {{end}}
+</div>
+</main>
+{{ template "base-footer" . }}
+</body>
+</html>
+{{ end }}
