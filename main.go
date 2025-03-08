@@ -2,55 +2,44 @@ package main
 
 import (
 	"fmt"
-	"groupietracker/handlers" // Import the handlers package
-	"groupietracker/models"   // Replace "yourmodule" with your actual module name
-	"groupietracker/utils"    // Replace "yourmodule" with your actual module name
+	"groupietracker/handlers"
+	"groupietracker/models"
+	"groupietracker/utils"
 	"log"
 	"net/http"
 )
 
-// Define a global variable to store the artists data
 var artists []models.Artist
+var relations models.Relation
 
 func main() {
-	var locations models.Locations
-	var dates models.Dates
-	var relations models.Relation
-
+	// Fetch artists data
 	err := utils.GetArtists(&artists)
 	if err != nil {
 		log.Println("Error fetching artists:", err)
 	}
 
-	err = utils.GetLocations(&locations)
-	if err != nil {
-		log.Println("Error fetching locations:", err)
-	}
-
-	err = utils.GetDates(&dates)
-	if err != nil {
-		log.Println("Error fetching dates:", err)
-	}
-
+	// Fetch relations data
 	err = utils.GetRelations(&relations)
 	if err != nil {
 		log.Println("Error fetching relations:", err)
 	}
 
-	// Serve static files (CSS, JavaScript, images)
+	// Serve static files
 	fs := http.FileServer(http.Dir("static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 
-	// ---- WEB SERVER SETUP ----
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) { //pass artists data in the homeHandler function
+	// Home route
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		handlers.HomeHandler(w, r, artists)
 	})
 
-	// Register the artist handler for the "/artist/{id}" route
+	// Artist route
 	http.HandleFunc("/artist/", func(w http.ResponseWriter, r *http.Request) {
-		handlers.ArtistHandler(w, r, artists)
+		handlers.ArtistHandler(w, r, artists, relations) // Pass relations here
 	})
 
+	// Start the server
 	fmt.Println("Server listening on port 8080")
 	err = http.ListenAndServe(":8080", nil)
 	if err != nil {

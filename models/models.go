@@ -39,3 +39,10 @@ type RelationIndex struct {
 	ID             int                 `json:"id"`
 	DatesLocations map[string][]string `json:"datesLocations"`
 }
+type ConcertDetail struct {
+	Lat     float64 `json:"lat"`
+	Lon     float64 `json:"lon"`
+	City    string  `json:"city"`
+	Country string  `json:"country"`
+	Date    string  `json:"date"`
+}

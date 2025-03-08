@@ -92,3 +92,33 @@ footer {
 .artist-info {
     margin-bottom: 1em;
 }
+
+/* Member links */
+.disabled-link {
+    color: #666;
+    cursor: not-allowed;
+    text-decoration: none;
+}
+
+/* Concert table */
+.concerts table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+.concerts th, .concerts td {
+    padding: 0.8rem;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+
+.concerts tr:hover {
+    background-color: #f5f5f5;
+}
+
+/* Map container */
+#map {
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
