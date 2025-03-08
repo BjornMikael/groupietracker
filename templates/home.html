@@ -1,8 +1,11 @@
 {{define "content"}}
     <h1>List of Artists:</h1>
-    <ul>
+    <div class="artist-grid">
         {{range .Artists}}
-        <li>{{.Name}}</li>
+        <a href="/artist/{{.ID}}" class="artist-card">
+            <img src="{{.Image}}" alt="{{.Name}}" class="artist-image">
+            <h2 class="artist-name">{{.Name}}</h2>
+        </a>
         {{end}}
-    </ul>
+    </div>
 {{end}}

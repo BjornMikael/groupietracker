@@ -3,9 +3,9 @@ body {
     margin: 0;
     padding: 0;
     background-color: #f0f0f0;
-    min-height: 100vh; /* Ensure the body takes up at least the full viewport height */
+    min-height: 100vh;
     display: flex;
-    flex-direction: column; /* Use flexbox to control vertical layout */
+    flex-direction: column;
 }
 
 header {
@@ -23,7 +23,7 @@ nav a {
 
 main {
     padding: 1em;
-    flex: 1; /* Allow main to grow and fill available space */
+    flex: 1;
 }
 
 footer {
@@ -31,7 +31,41 @@ footer {
     color: white;
     text-align: center;
     padding: 0.5em;
-    /* position: fixed; <--- REMOVE THIS LINE*/
-    /* bottom: 0; <--- REMOVE THIS LINE*/
     width: 100%;
+}
+
+/* Styles for the artist grid */
+.artist-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Responsive grid */
+    gap: 1em;
+}
+
+/* Styles for the artist card */
+.artist-card {
+    background-color: white;
+    border-radius: 0.5em;
+    padding: 0.5em;
+    text-align: center;
+    text-decoration: none; /* Remove link underline */
+    color: black; /* Set link color */
+    transition: transform 0.2s; /* Smooth transition for hover effect */
+}
+
+.artist-card:hover {
+    transform: scale(1.05); /* Slight zoom on hover */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
+}
+
+/* Styles for the artist image */
+.artist-image {
+    width: 100%;
+    border-radius: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+/* Styles for the artist name */
+.artist-name {
+    margin: 0;
+    font-size: 1.2em;
 }
